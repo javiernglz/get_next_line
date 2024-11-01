@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/01 16:03:39 by frnavarr          #+#    #+#             */
+/*   Updated: 2024/11/01 17:38:24 by frnavarr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+size_t	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+// lee desde el fd y llena el buffer
+// Lee caracteres BUFFER_SIZE en cada iteración hasta que 
+// haya un carácter \n o \0 en el búfer de línea.
+
+static char	*read_line(int fd, char *buffer)
+{
+	ssize_t	bytes_read;
+	
+	bytes_read = 1;
+	while (bytes_read > 0)
+	{
+//		ssize_t	 	 read(int fildes, void *buffer, size_t nbyte);
+		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
+	}
+}
+
+//extrae la linea del buffer hasta el caracter de nueva linea
+char	*extract_line(char *line_buffer)
+{
+
+}
+
+//borrar el contenido restante del buffer dsp de extraer
+//clean_buffer
+{
+
+}
+
+//libera la memoria asignada para evitar fugas
+//mem_free 
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*join;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	join = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!join)
+		return (NULL);
+	ft_strlcpy(join, s1, ft_strlen(s1) + 1);
+	ft_strlcpy(join + ft_strlen(s1), s2, ft_strlen(s2) + 1);
+	return (join);
+}
+
