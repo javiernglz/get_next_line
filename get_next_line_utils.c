@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:03:39 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/04 11:30:08 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:10:16 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static char	*read_line(int fd, char *read_buffer, char *accumulated_buffer)
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 			return (NULL);
+		else if (bytes_read == 0)
+			break;
 	}
 }
 
