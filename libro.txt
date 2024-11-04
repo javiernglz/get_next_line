@@ -1,0 +1,9 @@
+Este es un ejemplo de un párrafo que contiene varias líneas. 
+La programación es una habilidad esencial en el mundo actual, 
+y aprender a programar puede abrir muchas puertas en el ámbito profesional. 
+Existen muchos lenguajes de programación, cada uno con sus propias características 
+y aplicaciones. C es uno de los lenguajes de programación más fundamentales, 
+y es ampliamente utilizado en el desarrollo de sistemas operativos, controladores 
+y aplicaciones de alto rendimiento. Conocer los conceptos básicos de C 
+te proporciona una base sólida para aprender otros lenguajes y paradigmas de programación.
+

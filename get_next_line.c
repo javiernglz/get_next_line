@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/04 15:11:41 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:41:55 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*get_next_line(int fd)
 {
 	char	*buffer;
 	char	*line;
+	char	*tmp;
 	ssize_t	bytes_read;
 	
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
@@ -31,6 +32,19 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while ((bytes_read) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		tmp = line;
+		line = ft_strjoin(tmp, buffer);
+		free(tmp);
+		if (!line)
+			break ;
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	free(buffer);
+	return (line);
 }
 
 int main(void)
@@ -38,13 +52,13 @@ int main(void)
 	int		fd;
 	char	*line;
 	
-	fd = open("archivo.txt", O_RDONLY);
+	fd = open("libro.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error al abrir el archivo");
 		return (1);
 	}
-	while (line = get_next_line(fd) != NULL)
+	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("%s", line);
 		free (line);

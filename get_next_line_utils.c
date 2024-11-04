@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:03:39 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/04 15:13:42 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:43:07 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (join);
 }
 
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s != '\0')
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	return (NULL);
+}
