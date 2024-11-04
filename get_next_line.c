@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/04 15:41:55 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:07:11 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!buffer)
 		return (NULL);
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	while ((bytes_read) > 0)
+	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[bytes_read] = '\0';
 		tmp = line;
@@ -44,6 +43,12 @@ char	*get_next_line(int fd)
 			break ;
 	}
 	free(buffer);
+	// Verificamos si se leyó algo y si estamos al final del archivo
+	if (bytes_read < 0 || (bytes_read == 0 && line[0] == '\0'))
+	{
+		free(line);
+		return (NULL);
+	}
 	return (line);
 }
 
