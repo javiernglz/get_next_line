@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:03:39 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/04 11:18:37 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:30:08 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	ft_strlen(const char *str)
 // haya un carácter \n o \0 en el búfer de línea.
 
 //bytes_read = 1 para poder entrar en el while y comenzar la lectura
-static char	*read_line(int fd, char *read_buffer)
+static char	*read_line(int fd, char *read_buffer, char *accumulated_buffer)
 {
 	ssize_t	bytes_read;
 	
