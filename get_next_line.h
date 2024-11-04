@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:36 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/04 11:45:05 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:14:36 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
+char	*ft_strdup(const char *s);
+size_t	ft_strlen(const char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

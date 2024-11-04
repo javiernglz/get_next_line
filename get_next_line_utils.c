@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:03:39 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/04 14:10:16 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:13:42 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+
+char	*ft_strdup(const char *s)
+{
+	char	*copy;
+	size_t	len;
+
+	len = ft_strlen(s);
+	copy = (char *)malloc((len + 1) * sizeof(char));
+	if (!copy)
+		return (0);
+	ft_strlcpy(copy, s, len + 1);
+	return (copy);
+}
+
 // lee desde el fd y llena el buffer
 // Lee caracteres BUFFER_SIZE en cada iteración hasta que 
 // haya un carácter \n o \0 en el búfer de línea.
@@ -55,9 +69,6 @@ char	*extract_line(char *line_buffer)
 
 //borrar el contenido restante del buffer dsp de extraer
 //clean_buffer
-{
-
-}
 
 //libera la memoria asignada para evitar fugas
 //mem_free 
