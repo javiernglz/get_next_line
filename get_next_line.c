@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/08 13:11:26 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:32:56 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,17 @@
 // haya un carácter \n o \0 en el búfer de línea.
 
 //bytes_read = 1 para poder entrar en el while y comenzar la lectura
+//		ssize_t	 	 read(int fd, void *buffer, size_t nbyte);
+//read lee hasta BUFFER_SIZE bytes de fd y los almacena en read_buffer
+//devuelve el numero de bytes leidos y lo asigna a bytes_read
 static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 {
 	ssize_t	bytes_read;
 	char	*tmp;
 
 	bytes_read = read(fd, read_buffer, BUFFER_SIZE);
-	bytes_read = 1;
 	while (bytes_read > 0)
 	{
-//		ssize_t	 	 read(int fd, void *buffer, size_t nbyte);
-//read lee hasta BUFFER_SIZE bytes de fd y los almacena en read_buffer
-//devuelve el numero de bytes leidos y lo asigna a bytes_read
 		if (bytes_read == -1)
 		{
 			free(accumulated_buffer);
@@ -75,7 +74,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = read_line(fd, accumulated_buffer, buffer);
 	free(buffer);
-	buffer = NULL;
 	if (!line)
 		return (NULL);
 	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
