@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/08 13:32:56 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:42:57 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 }
 
 /* //extrae la linea del buffer hasta el caracter de nueva linea
+//ajusta el line_buffer para que solo contenga la línea completa,
+// separada del resto del contenido
+// usar despues de haber leido y acumulado los datos.
 char	*extract_line(char *line_buffer)
 {
 	int	i;
