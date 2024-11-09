@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/09 11:45:09 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:54:18 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ static char	*extract_line(char *accumulated_buffer)
 		line[len] = accumulated_buffer[len];
 		len++;
 	}
+	remaining_buffer = ft_strdup(accumulated_buffer + i + 1);
+	free(accumulated_buffer);
+	accumulated_buffer = remaining_buffer;
+
 	return (line);
 }
 
@@ -83,37 +87,32 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	char		*line;
-	char		*tmp;
 	ssize_t		bytes_read;
 	static char	*accumulated_buffer;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	line = read_line(fd, accumulated_buffer, buffer);
+	line = extract_line(accumulated_buffer);
 	free(buffer);
-	if (!line)
-		return (NULL);
+	if (line)
+		return (line);
 	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[bytes_read] = '\0';
-		tmp = line;
-		line = ft_strjoin(tmp, buffer);
-		free(tmp);
-		if (!line)
+		accumulated_buffer = ft_strjoin(accumulated_buffer, buffer);
+		line = extract_line(accumulated_buffer);
+		if (line)
 			break ;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	free(buffer);
 	// Verificamos si se leyó algo y si estamos al final del archivo
-	if (bytes_read < 0 || (bytes_read == 0 && line[0] == '\0'))
-	{
-		free(line);
-		return (ft_strdup(""));
-	}
+	if (bytes_read < 0 || (!line && !accumulated_buffer))
+		return (NULL);
 	return (line);
 }
 
