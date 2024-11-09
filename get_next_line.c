@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/08 13:42:57 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:45:09 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,34 @@ static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 	return (accumulated_buffer);
 }
 
-/* //extrae la linea del buffer hasta el caracter de nueva linea
+//extrae la linea del buffer hasta el caracter de nueva linea
 //ajusta el line_buffer para que solo contenga la línea completa,
 // separada del resto del contenido
 // usar despues de haber leido y acumulado los datos.
-char	*extract_line(char *line_buffer)
+static char	*extract_line(char *accumulated_buffer)
 {
-	int	i;
+	char	*line;
+	char	*remaining_buffer;
+	size_t	i;
+	size_t len;
 
-	while (line_buffer[i] && line_buffer[i] != '\n')
+	i = 0;
+	if (!accumulated_buffer || !accumulated_buffer[0])
+		return (NULL);
+	while (accumulated_buffer[i] && accumulated_buffer[i] != '\n')
 		i++;
-} */
+	/* Si accumulated_buffer[i] es \n, la expresión suma 1 adicional;
+	si no lo es, suma 0. Aseguramos tener espacio suficiente en ambos casos. */
+	line = malloc((i + 1 + (accumulated_buffer[i] == '\n')) * sizeof(char));
+	if (!line)
+		return (NULL);
+	while (len < i)
+	{
+		line[len] = accumulated_buffer[len];
+		len++;
+	}
+	return (line);
+}
 
 char	*get_next_line(int fd)
 {
