@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/09 12:08:07 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/09 12:18:00 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,21 @@ static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 	bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
-		if (bytes_read == -1)
-		{
-			free(accumulated_buffer);
-			return (NULL);
-		}
-		else if (bytes_read == 0)
-			break ;
 		read_buffer[bytes_read] = 0;
 		if (!accumulated_buffer)
 			accumulated_buffer = ft_strdup("");
 		tmp = accumulated_buffer;
 		accumulated_buffer = ft_strjoin(accumulated_buffer, read_buffer);
 		free(tmp);
-		tmp = NULL;
 		if (ft_strchr(read_buffer, '\n'))
 			break ;
+		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 	}
+	if (bytes_read == -1)
+		{
+			free(accumulated_buffer);
+			return (NULL);
+		}
 	return (accumulated_buffer);
 }
 
