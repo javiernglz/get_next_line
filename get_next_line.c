@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/09 11:54:18 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/09 12:08:07 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 			break ;
 		read_buffer[bytes_read] = 0;
 		if (!accumulated_buffer)
-		{
 			accumulated_buffer = ft_strdup("");
-			tmp = accumulated_buffer;
-			accumulated_buffer = ft_strjoin(tmp, read_buffer);
-			free(tmp);
-			tmp = NULL;
-		}
+		tmp = accumulated_buffer;
+		accumulated_buffer = ft_strjoin(accumulated_buffer, read_buffer);
+		free(tmp);
+		tmp = NULL;
 		if (ft_strchr(read_buffer, '\n'))
 			break ;
 	}
@@ -71,6 +69,7 @@ static char	*extract_line(char *accumulated_buffer)
 	line = malloc((i + 1 + (accumulated_buffer[i] == '\n')) * sizeof(char));
 	if (!line)
 		return (NULL);
+	len = 0;
 	while (len < i)
 	{
 		line[len] = accumulated_buffer[len];
@@ -87,7 +86,6 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	char		*line;
-	ssize_t		bytes_read;
 	static char	*accumulated_buffer;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -95,28 +93,21 @@ char	*get_next_line(int fd)
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
+	accumulated_buffer = read_line(fd, accumulated_buffer, buffer);
+	if (!accumulated_buffer)
+	{
+		free(buffer);
+		return (NULL);
+	}
 	line = extract_line(accumulated_buffer);
 	free(buffer);
-	if (line)
-		return (line);
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
-	{
-		buffer[bytes_read] = '\0';
-		accumulated_buffer = ft_strjoin(accumulated_buffer, buffer);
-		line = extract_line(accumulated_buffer);
-		if (line)
-			break ;
-		if (ft_strchr(buffer, '\n'))
-			break ;
-	}
-	free(buffer);
 	// Verificamos si se leyó algo y si estamos al final del archivo
-	if (bytes_read < 0 || (!line && !accumulated_buffer))
+	if (!line)
 		return (NULL);
 	return (line);
 }
 
-/* int	main(void)
+int	main(void)
 {
 	int		fd;
 	char	*line;
@@ -135,4 +126,3 @@ char	*get_next_line(int fd)
 	close(fd);
 	return (0);
 }
- */
