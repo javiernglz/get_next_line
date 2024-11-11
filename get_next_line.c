@@ -6,20 +6,21 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/09 12:18:00 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:57:48 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// lee desde el fd y llena el buffer
-// Lee caracteres BUFFER_SIZE en cada iteración hasta que 
-// haya un carácter \n o \0 en el búfer de línea.
+/* Lee datos del archivo especificado por fd, usa un buffer temporal read_buffer
+para leer fragmentos del archivo de tamaño BUFFER_SIZE y luego acumula esos
+fragmentos en accumulated_buffer.
+BUFFER_SIZE lee caracteres en cada iteración hasta que encuentre \n o \0 en el 
+búfer de línea.
 
-//bytes_read = 1 para poder entrar en el while y comenzar la lectura
-//		ssize_t	 	 read(int fd, void *buffer, size_t nbyte);
-//read lee hasta BUFFER_SIZE bytes de fd y los almacena en read_buffer
-//devuelve el numero de bytes leidos y lo asigna a bytes_read
+bytes_read = 1 para poder entrar en el while y comenzar la lectura
+Read lee hasta BUFFER_SIZE bytes de fd y los almacena en read_buffer,
+devuelve el numero de bytes leidos y lo asigna a bytes_read */
 static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 {
 	ssize_t	bytes_read;
@@ -46,10 +47,8 @@ static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 	return (accumulated_buffer);
 }
 
-//extrae la linea del buffer hasta el caracter de nueva linea
-//ajusta el line_buffer para que solo contenga la línea completa,
-// separada del resto del contenido
-// usar despues de haber leido y acumulado los datos.
+/* Extrae la linea del buffer hasta el caracter de nueva linea
+ajusto el line_buffer para que solo contenga la línea completa */
 static char	*extract_line(char *accumulated_buffer)
 {
 	char	*line;
@@ -79,7 +78,8 @@ static char	*extract_line(char *accumulated_buffer)
 
 	return (line);
 }
-
+/* Funcion principal que llama a read_line y extract_line para leer y devolver la
+siguiente linea del archivo */
 char	*get_next_line(int fd)
 {
 	char		*buffer;
@@ -105,7 +105,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int		fd;
 	char	*line;
@@ -124,3 +124,4 @@ int	main(void)
 	close(fd);
 	return (0);
 }
+ */
