@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/11 16:17:55 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:22:52 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static char	*extract_line(char *accumulated_buffer)
 	}
 	remaining_buffer = ft_strdup(accumulated_buffer + i + 1);
 	free(accumulated_buffer);
-	accumulated_buffer = remaining_buffer;
 	return (line);
 }
 
@@ -92,15 +91,10 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	accumulated_buffer = read_line(fd, accumulated_buffer, buffer);
-	if (!accumulated_buffer)
-	{
-		free(buffer);
-		return (NULL);
-	}
-	line = extract_line(accumulated_buffer);
 	free(buffer);
-	if (!line)
+	if (!accumulated_buffer)
 		return (NULL);
+	line = extract_line(accumulated_buffer);
 	return (line);
 }
 
