@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:03:39 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/08 12:37:31 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:16:45 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
 	join = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!join)
 		return (NULL);

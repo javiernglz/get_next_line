@@ -6,7 +6,7 @@
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/11 12:57:48 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:17:55 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,29 @@ static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 	}
 	if (bytes_read == -1)
-		{
-			free(accumulated_buffer);
-			return (NULL);
-		}
+	{
+		free(accumulated_buffer);
+		return (NULL);
+	}
 	return (accumulated_buffer);
 }
 
 /* Extrae la linea del buffer hasta el caracter de nueva linea
 ajusto el line_buffer para que solo contenga la línea completa */
+/* ln66 Si accumulated_buffer[i] es \n, la expresión suma 1 adicional;
+si no lo es, suma 0. Aseguramos tener espacio suficiente en ambos casos. */
 static char	*extract_line(char *accumulated_buffer)
 {
 	char	*line;
 	char	*remaining_buffer;
 	size_t	i;
-	size_t len;
+	size_t	len;
 
 	i = 0;
 	if (!accumulated_buffer || !accumulated_buffer[0])
 		return (NULL);
 	while (accumulated_buffer[i] && accumulated_buffer[i] != '\n')
 		i++;
-	/* Si accumulated_buffer[i] es \n, la expresión suma 1 adicional;
-	si no lo es, suma 0. Aseguramos tener espacio suficiente en ambos casos. */
 	line = malloc((i + 1 + (accumulated_buffer[i] == '\n')) * sizeof(char));
 	if (!line)
 		return (NULL);
@@ -75,11 +75,11 @@ static char	*extract_line(char *accumulated_buffer)
 	remaining_buffer = ft_strdup(accumulated_buffer + i + 1);
 	free(accumulated_buffer);
 	accumulated_buffer = remaining_buffer;
-
 	return (line);
 }
-/* Funcion principal que llama a read_line y extract_line para leer y devolver la
-siguiente linea del archivo */
+
+/* Funcion principal que llama a read_line y extract_line para leer
+y devolver la siguiente linea del archivo */
 char	*get_next_line(int fd)
 {
 	char		*buffer;
@@ -99,7 +99,6 @@ char	*get_next_line(int fd)
 	}
 	line = extract_line(accumulated_buffer);
 	free(buffer);
-	// Verificamos si se leyó algo y si estamos al final del archivo
 	if (!line)
 		return (NULL);
 	return (line);
