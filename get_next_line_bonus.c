@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frnavarr <frnavarr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:19:10 by frnavarr          #+#    #+#             */
-/*   Updated: 2024/11/28 11:36:07 by frnavarr         ###   ########.fr       */
+/*   Updated: 2024/11/28 11:46:23 by frnavarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*read_line(int fd, char *accumulated_buffer, char *read_buffer)
 {
@@ -80,19 +80,19 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	char		*line;
-	static char	*accumulated_buffer;
+	static char	*accumulated_buffer[FDMAX];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	accumulated_buffer = read_line(fd, accumulated_buffer, buffer);
+	accumulated_buffer[fd] = read_line(fd, accumulated_buffer[fd], buffer);
 	free(buffer);
-	if (!accumulated_buffer)
+	if (!accumulated_buffer[fd])
 		return (NULL);
-	line = extract_line(&accumulated_buffer);
-	update_accumulated_buffer(&accumulated_buffer, ft_strlen(line));
+	line = extract_line(&accumulated_buffer[fd]);
+	update_accumulated_buffer(&accumulated_buffer[fd], ft_strlen(line));
 	return (line);
 }
 
